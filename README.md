@@ -11,6 +11,19 @@
 
 [Features](#features) • [Installation](#installation) • [Quick Start](#quick-start) • [Documentation](#documentation) • [API Reference](#api-reference)
 
+  <table>
+    <tr>
+      <td><img src="~Documentation/example1.png" alt="Multiple Viewports" width="300"/></td>
+      <td><img src="~Documentation/example2.png" alt="Picture in Picture" width="300"/></td>
+      <td><img src="~Documentation/example3.png" alt="Custom Layout" width="300"/></td>
+    </tr>
+    <tr>
+      <td align="center"><b>More than 4 viewports!</b><br/>Have as many as you desire</td>
+      <td align="center"><b>Custom Layout</b><br/>Unique Configuration</td>
+      <td align="center"><b>Widget Supported</b><br/>Create widget only viewports</td>
+    </tr>
+  </table>
+
 </div>
 
 <br>
