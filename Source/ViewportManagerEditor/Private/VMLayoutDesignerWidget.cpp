@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMLayoutDesignerWidget.h"
 #include "Blueprint/WidgetTree.h"
 #include "Components/CanvasPanel.h"

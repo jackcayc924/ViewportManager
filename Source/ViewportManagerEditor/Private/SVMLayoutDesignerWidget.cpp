@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "SVMLayoutDesignerWidget.h"
 #include "VMLayoutPaneEditorObject.h"
 #include "VMSplitLayoutAsset.h"

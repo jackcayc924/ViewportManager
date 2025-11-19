@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "Styles/VMLayoutEditorStyle.h"
 #include "Styling/SlateStyleMacros.h"
 #include "Styling/SlateTypes.h"

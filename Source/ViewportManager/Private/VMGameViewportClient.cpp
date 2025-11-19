@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMGameViewportClient.h"
 #include "Engine/Engine.h"
 #include "Engine/GameInstance.h"

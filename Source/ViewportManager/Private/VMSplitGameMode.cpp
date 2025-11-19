@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMSplitGameMode.h"
 #include "VMSplitSubsystem.h"
 #include "VMSplitLayoutAsset.h"

@@ -2,12 +2,12 @@
 
 <div align="center">
 
-![Unreal Engine](https://img.shields.io/badge/Unreal%20Engine-5.5-blue?style=flat-square&logo=unrealengine)
-![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey?style=flat-square)
+![Unreal Engine](https://img.shields.io/badge/Unreal%20Engine-5.7-blue?style=flat-square&logo=unrealengine)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Mac-lightgrey?style=flat-square)
 ![License](https://img.shields.io/badge/License-Custom-green?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-success?style=flat-square)
 
-**Professional viewport management system for Unreal Engine 5.5**
+**Professional viewport management system for Unreal Engine 5.7+**
 
 [Features](#features) • [Installation](#installation) • [Quick Start](#quick-start) • [Documentation](#documentation) • [API Reference](#api-reference)
 
@@ -49,7 +49,9 @@
 ## Overview
 
 Are you tired of being limited by the native 4-player split screen in Unreal Engine? Do you wish you could customize them freely and have more of them? This plugin is for you! <br><br>
-**Viewport Manager** is a powerful C++ plugin for Unreal Engine 5.5 that enables advanced viewport management beyond the engine's default 4-player limit. Create custom viewport layouts, manage multiple camera views, and build sophisticated multi-pane applications with ease.
+**Viewport Manager** is a powerful C++ plugin for Unreal Engine 5.7+ that enables advanced viewport management beyond the engine's default 4-player limit. Create custom viewport layouts, manage multiple camera views, and build sophisticated multi-pane applications with ease.
+
+**Important:** This plugin requires the **EnhancedInput plugin** to be enabled in your project.
 
 <br>
 
@@ -93,18 +95,19 @@ Are you tired of being limited by the native 4-player split screen in Unreal Eng
 
 ## Requirements
 
-- **Unreal Engine**: 5.5 or later
-- **Platform**: Windows, Linux, MacOS? (Untested)
+- **Unreal Engine**: 5.7 or later
+- **Platform**: Windows, Linux, Mac
 - **Build Tools**: Visual Studio 2022 (Windows) or compatible C++ compiler
 - **Project Type**: C++ or Blueprint (plugin works with both)
+- **Dependencies**: **EnhancedInput plugin** (must be enabled in your project)
 
 <br>
 
 ## Installation
 
-### Method 1: Unreal Engine Marketplace
-1. Navigate to [here](https://example.com)
-2. Install through marketplace
+### Method 1: Fab Marketplace
+1. Navigate to the [Fab Marketplace listing](https://www.fab.com/listings/5f860e1e-b4f5-4c08-8a72-ffb0baf05263)
+2. Install through Fab marketplace
 
 ### Method 2: Plugin Installation
 
@@ -118,6 +121,7 @@ Are you tired of being limited by the native 4-player split screen in Unreal Eng
 3. **Regenerate** project files (right-click `.uproject` → Generate Visual Studio project files)
 4. **Compile** your project
 5. **Enable** the plugin in Edit → Plugins → Installed → Viewport Manager
+6. **Enable** the EnhancedInput plugin (required dependency)
 
 <br>
 
@@ -625,7 +629,7 @@ Contributions are welcome! To contribute:
 - Cannot be resold for profit without explicit permission from me
 
 If you wish to redistribute or sell this plugin (modified or unmodified), please contact me for permission.
-@jackcayc924@gmail.com
+jackcayc924@gmail.com
 
 <br>
 

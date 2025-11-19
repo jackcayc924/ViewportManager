@@ -2,27 +2,32 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0.0",
+	"EngineVersion": "5.7",
+	"FabURL": "com.epicgames.launcher://ue/Fab/product/5f860e1e-b4f5-4c08-8a72-ffb0baf05263",
 	"FriendlyName": "Viewport Manager",
-	"Description": "Runtime C++ plugin that manages Local Players + custom layout via a custom UGameViewportClient with freeform placement & resizing of each player viewport.",
+	"Description": "Runtime C++ plugin that manages Local Players + custom layout via a custom UGameViewportClient with freeform placement & resizing of each player viewport. NOTE: This plugin requires the EnhancedInput plugin to be enabled.",
 	"Category": "UI",
 	"CreatedBy": "",
 	"CreatedByURL": "",
 	"DocsURL": "",
 	"MarketplaceURL": "",
 	"SupportURL": "",
-	"EngineVersion": "5.5.0",
 	"CanContainContent": true,
-	"Installed": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
 	"Modules": [
 		{
 			"Name": "ViewportManager",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": ["Win64", "Mac", "Linux"]
 		},
 		{
 			"Name": "ViewportManagerEditor",
 			"Type": "Editor",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": ["Win64", "Mac", "Linux"]
 		}
 	],
 	"Plugins": [
@@ -32,3 +37,4 @@
 		}
 	]
 }
+

@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMSplitSubsystem.h"
 #include "VMGameViewportClient.h"
 #include "Engine/Engine.h"

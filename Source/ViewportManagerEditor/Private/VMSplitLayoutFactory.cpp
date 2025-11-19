@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMSplitLayoutFactory.h"
 #include "AssetToolsModule.h"
 #include "VMSplitLayoutAsset.h"

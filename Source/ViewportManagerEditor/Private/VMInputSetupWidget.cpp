@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMInputSetupWidget.h"
 #include "AssetRegistry/AssetRegistryModule.h"
 #include "InputAction.h"

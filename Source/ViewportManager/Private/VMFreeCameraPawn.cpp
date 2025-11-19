@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMFreeCameraPawn.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"

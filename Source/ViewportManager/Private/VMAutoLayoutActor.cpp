@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMAutoLayoutActor.h"
 #include "VMSplitSubsystem.h"
 #include "Engine/Engine.h"

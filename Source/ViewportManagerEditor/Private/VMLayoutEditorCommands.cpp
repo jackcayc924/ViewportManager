@@ -1,3 +1,5 @@
+// Copyright jackcayc924 2025. All Rights Reserved.
+
 #include "VMLayoutEditorCommands.h"
 
 #define LOCTEXT_NAMESPACE "VMLayoutEditorCommands"
