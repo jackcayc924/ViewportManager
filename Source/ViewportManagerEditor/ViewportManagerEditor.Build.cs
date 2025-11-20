@@ -34,7 +34,6 @@ public class ViewportManagerEditor : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"EditorStyle",
 				"EditorWidgets",
 				"UnrealEd",
 				"ToolMenus",
