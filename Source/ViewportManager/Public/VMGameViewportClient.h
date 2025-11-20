@@ -24,7 +24,7 @@ public:
 
 	virtual void LayoutPlayers() override;
 	virtual bool InputKey(const FInputKeyEventArgs& EventArgs) override;
-	virtual bool InputAxis(FViewport* InViewport, FInputDeviceId InputDevice, FKey Key, float Delta, float DeltaTime, int32 NumSamples, bool bGamepad) override;
+	virtual bool InputAxis(const FInputKeyEventArgs& EventArgs) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Viewport Manager")
 	void ApplyLayout(UVMSplitLayoutAsset* LayoutAsset);

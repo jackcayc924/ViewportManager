@@ -109,9 +109,11 @@ bool UVMGameViewportClient::InputKey(const FInputKeyEventArgs& EventArgs)
 					{
 						if (APlayerController* PC = LP->GetPlayerController(GetWorld()))
 						{
-							PRAGMA_DISABLE_DEPRECATION_WARNINGS
-							return PC->InputKey(EventArgs.Key, EventArgs.Event, EventArgs.AmountDepressed, EventArgs.IsGamepad());
-							PRAGMA_ENABLE_DEPRECATION_WARNINGS
+							// Use the new InputKey signature that takes FInputKeyEventArgs
+							FInputKeyEventArgs ModifiedArgs = EventArgs;
+							ModifiedArgs.Viewport = Viewport;
+							ModifiedArgs.ControllerId = LP->GetControllerId();
+							return PC->InputKey(ModifiedArgs);
 						}
 					}
 				}
@@ -123,9 +125,9 @@ bool UVMGameViewportClient::InputKey(const FInputKeyEventArgs& EventArgs)
 	return Super::InputKey(EventArgs);
 }
 
-bool UVMGameViewportClient::InputAxis(FViewport* InViewport, FInputDeviceId InputDevice, FKey Key, float Delta, float DeltaTime, int32 NumSamples, bool bGamepad)
+bool UVMGameViewportClient::InputAxis(const FInputKeyEventArgs& EventArgs)
 {
-	if (!bGamepad)
+	if (!EventArgs.IsGamepad())
 	{
 		FVector2D MousePos;
 		if (GetMousePosition(MousePos))
@@ -151,13 +153,16 @@ bool UVMGameViewportClient::InputAxis(FViewport* InViewport, FInputDeviceId Inpu
 
 				if (bShouldReceiveInput)
 				{
+					// In UE 5.7+, axis input is handled through the enhanced input system
+					// Route axis input directly to the target player controller (same as InputKey)
 					if (ULocalPlayer* LP = GetGameInstance()->GetLocalPlayerByIndex(TargetLP))
 					{
 						if (APlayerController* PC = LP->GetPlayerController(GetWorld()))
 						{
-							PRAGMA_DISABLE_DEPRECATION_WARNINGS
-							return PC->InputAxis(Key, Delta, DeltaTime, NumSamples, bGamepad);
-							PRAGMA_ENABLE_DEPRECATION_WARNINGS
+							FInputKeyEventArgs ModifiedArgs = EventArgs;
+							ModifiedArgs.Viewport = Viewport;
+							ModifiedArgs.ControllerId = LP->GetControllerId();
+							return PC->InputKey(ModifiedArgs);
 						}
 					}
 				}
@@ -166,7 +171,7 @@ bool UVMGameViewportClient::InputAxis(FViewport* InViewport, FInputDeviceId Inpu
 		return false;
 	}
 
-	return Super::InputAxis(InViewport, InputDevice, Key, Delta, DeltaTime, NumSamples, bGamepad);
+	return Super::InputAxis(EventArgs);
 }
 
 void UVMGameViewportClient::ApplyLayout(UVMSplitLayoutAsset* LayoutAsset)
