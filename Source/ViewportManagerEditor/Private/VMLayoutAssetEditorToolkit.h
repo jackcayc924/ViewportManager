@@ -30,7 +30,7 @@ protected:
 private:
 	static const FName DesignerTabId;
 
-	UVMSplitLayoutAsset* EditingAsset = nullptr;
+	TObjectPtr<UVMSplitLayoutAsset> EditingAsset = nullptr;
 	TSharedPtr<SVMLayoutDesignerWidget> DesignerWidget;
 	TSharedPtr<IDetailsView> AssetDetailsView;
 };
