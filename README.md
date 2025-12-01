@@ -96,7 +96,7 @@ Are you tired of being limited by the native 4-player split screen in Unreal Eng
 ## Requirements
 
 - **Unreal Engine**: 5.7 or later
-- **Platform**: Windows, Linux, Mac
+- **Platform**: Windows
 - **Build Tools**: Visual Studio 2022 (Windows) or compatible C++ compiler
 - **Project Type**: C++ or Blueprint (plugin works with both)
 - **Dependencies**: **EnhancedInput plugin** (must be enabled in your project)
