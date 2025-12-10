@@ -106,7 +106,7 @@ Are you tired of being limited by the native 4-player split screen in Unreal Eng
 ## Installation
 
 ### Method 1: Fab Marketplace
-1. Navigate to the [Fab Marketplace listing](https://www.fab.com/listings/5f860e1e-b4f5-4c08-8a72-ffb0baf05263)
+1. Navigate to the [Fab Marketplace listing]([https://www.fab.com/listings/5f860e1e-b4f5-4c08-8a72-ffb0baf05263](https://www.fab.com/listings/6bc8b467-2ef5-4848-8c26-170893b0998c?tab=%3Ar1e%3A))
 2. Install through Fab marketplace
 
 ### Method 2: Plugin Installation
