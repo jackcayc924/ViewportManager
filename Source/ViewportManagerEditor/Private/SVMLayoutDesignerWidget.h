@@ -52,8 +52,6 @@ private:
 	void BindCommands();
 	void DuplicateSelectedPane();
 	void DeleteSelectedPane();
-	void BringToFront();
-	void SendToBack();
 	TSharedRef<SWidget> CreateTemplatePickerMenu();
 	void BuildContextMenu(FMenuBuilder& MenuBuilder);
 

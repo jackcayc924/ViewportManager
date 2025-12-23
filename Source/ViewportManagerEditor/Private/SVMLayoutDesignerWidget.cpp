@@ -371,20 +371,8 @@ void SVMLayoutDesignerWidget::RefreshPreview()
 		return;
 	}
 
-	// Create sorted indices array based on depth (lower depth renders first, higher depth on top)
-	TArray<int32> SortedPaneIndices;
-	SortedPaneIndices.Reserve(LayoutAsset->Panes.Num());
-	for (int32 i = 0; i < LayoutAsset->Panes.Num(); ++i)
-	{
-		SortedPaneIndices.Add(i);
-	}
-	SortedPaneIndices.Sort([this](int32 A, int32 B)
-	{
-		return LayoutAsset->Panes[A].Depth < LayoutAsset->Panes[B].Depth;
-	});
-
-	// Render panes in depth order
-	for (int32 PaneIdx : SortedPaneIndices)
+	// Render panes in array order
+	for (int32 PaneIdx = 0; PaneIdx < LayoutAsset->Panes.Num(); ++PaneIdx)
 	{
 		const FVMSplitPane& Pane = LayoutAsset->Panes[PaneIdx];
 		const FVMSplitRect& Rect = Pane.Rect;
@@ -406,14 +394,29 @@ void SVMLayoutDesignerWidget::RefreshPreview()
 		FLinearColor PaneColor = GetPaneColor(Pane.LocalPlayerIndex, bIsSelected);
 		PaneColor.A = 0.7f;
 
-		FText Label = FText::Format(
-			NSLOCTEXT("VMLayoutDesigner", "PaneFmt", "LP{0}\n({1}, {2})\n{3} x {4}"),
-			FText::AsNumber(Pane.LocalPlayerIndex),
-			FText::AsNumber(FMath::RoundToInt(Rect.Origin01.X * 100.f)),
-			FText::AsNumber(FMath::RoundToInt(Rect.Origin01.Y * 100.f)),
-			FText::AsNumber(FMath::RoundToInt(Rect.Size01.X * 100.f)),
-			FText::AsNumber(FMath::RoundToInt(Rect.Size01.Y * 100.f))
-		);
+
+		FText Label;
+		if (Pane.bUIOnly)
+		{
+			Label = FText::Format(
+				NSLOCTEXT("VMLayoutDesigner", "UIOnlyPaneFmt", "[UI Only]\n({0}, {1})\n{2} x {3}"),
+				FText::AsNumber(FMath::RoundToInt(Rect.Origin01.X * 100.f)),
+				FText::AsNumber(FMath::RoundToInt(Rect.Origin01.Y * 100.f)),
+				FText::AsNumber(FMath::RoundToInt(Rect.Size01.X * 100.f)),
+				FText::AsNumber(FMath::RoundToInt(Rect.Size01.Y * 100.f))
+			);
+		}
+		else
+		{
+			Label = FText::Format(
+				NSLOCTEXT("VMLayoutDesigner", "PaneFmt", "LP{0}\n({1}, {2})\n{3} x {4}"),
+				FText::AsNumber(Pane.LocalPlayerIndex),
+				FText::AsNumber(FMath::RoundToInt(Rect.Origin01.X * 100.f)),
+				FText::AsNumber(FMath::RoundToInt(Rect.Origin01.Y * 100.f)),
+				FText::AsNumber(FMath::RoundToInt(Rect.Size01.X * 100.f)),
+				FText::AsNumber(FMath::RoundToInt(Rect.Size01.Y * 100.f))
+			);
+		}
 
 		PreviewCanvas->AddSlot()
 		.Anchors(FAnchors(MinX, MinY, MaxX, MaxY))
@@ -984,17 +987,6 @@ void SVMLayoutDesignerWidget::BindCommands()
 		FCanExecuteAction::CreateSP(this, &SVMLayoutDesignerWidget::HasValidSelection)
 	);
 
-	CommandList->MapAction(
-		FVMLayoutEditorCommands::Get().BringToFront,
-		FExecuteAction::CreateSP(this, &SVMLayoutDesignerWidget::BringToFront),
-		FCanExecuteAction::CreateSP(this, &SVMLayoutDesignerWidget::HasValidSelection)
-	);
-
-	CommandList->MapAction(
-		FVMLayoutEditorCommands::Get().SendToBack,
-		FExecuteAction::CreateSP(this, &SVMLayoutDesignerWidget::SendToBack),
-		FCanExecuteAction::CreateSP(this, &SVMLayoutDesignerWidget::HasValidSelection)
-	);
 
 	CommandList->MapAction(
 		FVMLayoutEditorCommands::Get().ToggleGrid,
@@ -1053,35 +1045,6 @@ void SVMLayoutDesignerWidget::DeleteSelectedPane()
 	RefreshPreview();
 }
 
-void SVMLayoutDesignerWidget::BringToFront()
-{
-	if (!HasValidSelection()) return;
-
-	FScopedTransaction Transaction(NSLOCTEXT("VMLayoutEditor", "BringToFront", "Bring to Front"));
-	LayoutAsset->Modify();
-
-	int32 MaxDepth = 0;
-	for (const auto& Pane : LayoutAsset->Panes)
-		MaxDepth = FMath::Max(MaxDepth, Pane.Depth);
-
-	LayoutAsset->Panes[SelectedPaneIndex].Depth = MaxDepth + 1;
-	RefreshPreview();
-}
-
-void SVMLayoutDesignerWidget::SendToBack()
-{
-	if (!HasValidSelection()) return;
-
-	FScopedTransaction Transaction(NSLOCTEXT("VMLayoutEditor", "SendToBack", "Send to Back"));
-	LayoutAsset->Modify();
-
-	int32 MinDepth = 0;
-	for (const auto& Pane : LayoutAsset->Panes)
-		MinDepth = FMath::Min(MinDepth, Pane.Depth);
-
-	LayoutAsset->Panes[SelectedPaneIndex].Depth = MinDepth - 1;
-	RefreshPreview();
-}
 
 TSharedRef<SWidget> SVMLayoutDesignerWidget::CreateTemplatePickerMenu()
 {

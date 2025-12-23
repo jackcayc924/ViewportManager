@@ -132,7 +132,6 @@ FVMLayoutTemplate FVMLayoutTemplateLibrary::CreatePictureInPicture()
 	MainPane.LocalPlayerIndex = 0;
 	MainPane.Rect.Origin01 = FVector2f(0.0f, 0.0f);
 	MainPane.Rect.Size01 = FVector2f(1.0f, 1.0f);
-	MainPane.Depth = 0;
 	Template.Panes.Add(MainPane);
 
 	// Small inset pane (bottom-right corner, 25% width, 25% height)
@@ -140,7 +139,6 @@ FVMLayoutTemplate FVMLayoutTemplateLibrary::CreatePictureInPicture()
 	InsetPane.LocalPlayerIndex = 1;
 	InsetPane.Rect.Origin01 = FVector2f(0.75f, 0.75f);
 	InsetPane.Rect.Size01 = FVector2f(0.25f, 0.25f);
-	InsetPane.Depth = 1;  // Render on top
 	Template.Panes.Add(InsetPane);
 
 	return Template;

@@ -21,7 +21,7 @@ struct VIEWPORTMANAGER_API FVMCameraControlSettings
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls", meta = (EditCondition = "!bUIOnly"))
 	bool bCameraControlsEnabled = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls", meta = (EditCondition = "bCameraControlsEnabled"))
@@ -36,10 +36,10 @@ struct VIEWPORTMANAGER_API FVMCameraControlSettings
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls", meta = (EditCondition = "bCameraControlsEnabled"))
 	bool bTargetActorTrackingEnabled = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls", meta = (EditCondition = "!bUIOnly"))
 	TSoftObjectPtr<AActor> TargetActor = nullptr;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls", meta = (EditCondition = "!bUIOnly"))
 	bool bKeepMouseCursorVisible = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls|Input", meta = (ClampMin = "0.1", ClampMax = "10.0"))
@@ -102,10 +102,11 @@ struct VIEWPORTMANAGER_API FVMSplitPane
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pane")
 	FVMSplitRect Rect;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pane", meta = (ClampMin = "0", ClampMax = "100", UIMin = "0", UIMax = "100", ToolTip = "Z-order depth - higher values render on top of lower values"))
-	int32 Depth = 0;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pane", meta = (ToolTip = "UI-only pane renders only the HUD widget without a 3D viewport. Use for overlay UI on top of other viewports."))
+	bool bUIOnly = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pane")
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pane", meta = (EditCondition = "!bUIOnly"))
 	TSubclassOf<APawn> PawnClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pane", meta = (AllowedClasses = "/Script/UMGEditor.WidgetBlueprint, /Script/UMG.UserWidget", ToolTip = "Optional HUD widget class to display overlay UI for this viewport"))
@@ -114,7 +115,7 @@ struct VIEWPORTMANAGER_API FVMSplitPane
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pane")
 	bool bReceivesKeyboardMouse = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (EditCondition = "!bUIOnly"))
 	EVMViewportCameraMode CameraMode = EVMViewportCameraMode::Orbit;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (EditCondition = "CameraMode == EVMViewportCameraMode::Custom"))
@@ -123,19 +124,19 @@ struct VIEWPORTMANAGER_API FVMSplitPane
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (EditCondition = "bUseCustomCameraTransform"))
 	FTransform CameraTransform = FTransform(FRotator::ZeroRotator, FVector(0.0f, 0.0f, 100.0f), FVector::OneVector);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (EditCondition = "!bUIOnly"))
 	bool bUseCustomCameraTransform = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (EditCondition = "bUseCustomFocusPoint"))
 	FVector FocusPoint = FVector::ZeroVector;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (EditCondition = "!bUIOnly"))
 	bool bUseCustomFocusPoint = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (EditCondition = "bUseCustomFocusPoint"))
 	float OrbitDistance = 500.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Controls", meta = (EditCondition = "!bUIOnly"))
 	FVMCameraControlSettings CameraControls;
 };
 

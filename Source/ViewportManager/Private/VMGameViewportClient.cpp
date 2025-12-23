@@ -189,6 +189,13 @@ void UVMGameViewportClient::ApplyLayout(UVMSplitLayoutAsset* LayoutAsset)
 
 	for (const FVMSplitPane& Pane : LayoutAsset->Panes)
 	{
+		// UI-only panes do not need a local player or 3D viewport - just the HUD
+		if (Pane.bUIOnly)
+		{
+			UE_LOG(LogViewportManager, Log, TEXT("UVMGameViewportClient::ApplyLayout - Pane %d is UI-only, skipping player setup"), Pane.LocalPlayerIndex);
+			continue;
+		}
+
 		if (Pane.LocalPlayerIndex < 0)
 		{
 			UE_LOG(LogViewportManager, Warning, TEXT("UVMGameViewportClient::ApplyLayout - Invalid LocalPlayerIndex %d"), Pane.LocalPlayerIndex);
@@ -537,7 +544,8 @@ void UVMGameViewportClient::SetupViewportHUDs()
     bool bHasAnyHUDs = false;
     for (const FVMSplitPane& Pane : CurrentLayoutAsset->Panes)
     {
-        if (PlayerRects.Contains(Pane.LocalPlayerIndex) && Pane.ViewportHUDClass)
+        // Check both regular panes (in PlayerRects) and UI-only panes
+        if (Pane.ViewportHUDClass && (PlayerRects.Contains(Pane.LocalPlayerIndex) || Pane.bUIOnly))
         {
             bHasAnyHUDs = true;
             break;
@@ -559,21 +567,37 @@ void UVMGameViewportClient::SetupViewportHUDs()
 
     for (const FVMSplitPane& Pane : CurrentLayoutAsset->Panes)
     {
-        if (!PlayerRects.Contains(Pane.LocalPlayerIndex) || !Pane.ViewportHUDClass) continue;
+        if (!Pane.ViewportHUDClass) continue;
 
-        ULocalPlayer* LP = GetGameInstance()->GetLocalPlayerByIndex(Pane.LocalPlayerIndex);
-        if (!LP) continue;
+        UUserWidget* HUD = nullptr;
+        FVMSplitRect R;
 
-        APlayerController* PC = LP->GetPlayerController(GetWorld());
-        if (!PC) continue;
+        if (Pane.bUIOnly)
+        {
+            // UI-only panes don't have a LocalPlayer - create widget with World
+            HUD = CreateWidget<UUserWidget>(GetWorld(), Pane.ViewportHUDClass);
+            R = Pane.Rect;
+        }
+        else
+        {
+            // Regular panes need to be in PlayerRects and have a LocalPlayer
+            if (!PlayerRects.Contains(Pane.LocalPlayerIndex)) continue;
 
-        UUserWidget* HUD = CreateWidget<UUserWidget>(PC, Pane.ViewportHUDClass);
+            ULocalPlayer* LP = GetGameInstance()->GetLocalPlayerByIndex(Pane.LocalPlayerIndex);
+            if (!LP) continue;
+
+            APlayerController* PC = LP->GetPlayerController(GetWorld());
+            if (!PC) continue;
+
+            HUD = CreateWidget<UUserWidget>(PC, Pane.ViewportHUDClass);
+            R = PlayerRects[Pane.LocalPlayerIndex];
+        }
+
         if (!HUD) continue;
 
         UCanvasPanelSlot* Slot = HUDRootCanvas->AddChildToCanvas(HUD);
         if (!Slot) { HUD->RemoveFromParent(); continue; }
 
-        const FVMSplitRect& R = PlayerRects[Pane.LocalPlayerIndex];
         const float MinX = R.Origin01.X;
         const float MinY = R.Origin01.Y;
         const float MaxX = R.Origin01.X + R.Size01.X;
@@ -593,7 +617,8 @@ void UVMGameViewportClient::SetupViewportHUDs()
 			VMHUD->SetViewportInfo(Pane.LocalPlayerIndex, R);
 		}
 
-		UE_LOG(LogViewportManager, Log, TEXT("HUD added for LP %d with anchors (%.2f,%.2f)-(%.2f,%.2f)"),
+		UE_LOG(LogViewportManager, Log, TEXT("HUD added for %s pane %d with anchors (%.2f,%.2f)-(%.2f,%.2f)"),
+			Pane.bUIOnly ? TEXT("UI-only") : TEXT("regular"),
 			Pane.LocalPlayerIndex, MinX, MinY, MaxX, MaxY);
 	}
 }

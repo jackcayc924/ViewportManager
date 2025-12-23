@@ -14,7 +14,5 @@ public:
 
 	TSharedPtr<FUICommandInfo> Duplicate;
 	TSharedPtr<FUICommandInfo> Delete;
-	TSharedPtr<FUICommandInfo> BringToFront;
-	TSharedPtr<FUICommandInfo> SendToBack;
 	TSharedPtr<FUICommandInfo> ToggleGrid;
 };
